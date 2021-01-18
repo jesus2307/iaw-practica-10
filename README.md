@@ -1,11 +1,11 @@
-### iaw-practica-10
+# iaw-practica-10
 
-### Nombre del theme que ha escogido y qué pasos ha realizado para instalarlo y configurarlo adecuadamente.
-# Sensible
+# Nombre del theme que ha escogido y qué pasos ha realizado para instalarlo y configurarlo adecuadamente.
+### Sensible
 descragamos el tema, lo descomprimimos y lo sustituimos en la capeta theme y lo activamos desde la pagina
 
-### Listado de los plugins y widgets más utilizados en WordPress.
-# plugin:
+# Listado de los plugins y widgets más utilizados en WordPress.
+### plugin:
 Yoast SEO
 Es uno de los plugins más conocidos y utilizados para mejorar el posicionamiento SEO de una web en WordPress.
 
@@ -21,7 +21,7 @@ Es uno de los plugins de optimización de pago pero con unos resultados impresio
 BJ Lazy Load
 Este plugin de WordPress ayuda a acelerar tiempo de carga de la web.
 
-# widgets:
+### widgets:
 Black Studio TinyMCE Widget
 Este widget nos ofrece un editor de texto como el de las entradas del blog, con lo cual podremos por títulos, imágenes, alinear textos, cambiar colores y demás opciones del editor.
 
@@ -38,7 +38,7 @@ Meks Easy Photo Feed Widget
 Si tienes una cuenta de Instagram y quieres mostrar su contenido en tu web, este widget lo hace de un modo muy fácil. Únicamente necesitas saber el nombre de la cuenta o el hastag. Seleccionas el número de imágenes a mostrar, las columnas y tamaño máximo y cada cuánto tiempo tiene que recargar el contenido.
 También incluye un botón para que te sigan.
 
-### Listado de los plugins y widgets que ha escogido y qué pasos ha realizado para instalarlo y configurarlo adecuadamente.
+# Listado de los plugins y widgets que ha escogido y qué pasos ha realizado para instalarlo y configurarlo adecuadamente.
 BJ Lazy Load
 Este plugin de WordPress ayuda a acelerar tiempo de carga de la web.
 wget https://downloads.wordpress.org/plugin/rocket-lazy-load.2.3.4.zip
