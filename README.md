@@ -1,5 +1,5 @@
 # http://54.167.22.58/ 
-# admin/admin
+* admin/admin
 # iaw-practica-10
 
 # Nombre del theme que ha escogido y qué pasos ha realizado para instalarlo y configurarlo adecuadamente.
