@@ -1,32 +1,25 @@
 #! /bin/bash
 
 # Marcamos los pasos en la ejecución
-
 set -x
 
 # Actualizamos lista de paquetes
-
 apt update 
 
 # Actualizamos los paquetes
-
 apt upgrade -y
 
 # Instalamos el servidor web Apache
-
 apt install apache2 -y
 
 # Instalamos MySQL-Server
-
 apt install mysql-server -y
 
 # Instalamos los modulos de PHP
-
 apt install php libapache2-mod-php php-mysql -y
 
-######################
-#   Variables        #
-######################
+
+#Variables#
 
 BD_NOMBRE=wpiaw
 BD_USUARIO=jesus
@@ -34,7 +27,6 @@ IP_FRONT=localhost
 BD_PASS=root
 URL=http://
 # Configuración de base de datos
-
 mysql -u root <<< "DROP DATABASE IF EXISTS $BD_NOMBRE;"
 mysql -u root <<<"CREATE DATABASE $BD_NOMBRE;"
 mysql -u root <<<"DROP USER IF EXISTS $BD_USUARIO@$IP_FRONT;"
