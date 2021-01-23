@@ -1,66 +1,71 @@
-!/bin/bash
+#! /bin/bash
 
-##############
-###VARIABLES##
-##############
-CLAVE_MYSQL=root
-ROOT_MYSQL=root
-DB_NAME=wordpress_data
-DB_USER=wordpress_user
-DB_PASSWORD=wordpress_password
-IP_PRIVADA=localhost
+# Marcamos los pasos en la ejecución
 
-# Variables de sitio Wordpress
-WP_URL=54.174.234.141
-WP-ADMIN=jesus
-WP_ADMIN_PASS=jesus
-WP_NAME=jesus
-WP_ADMIN_EMAIL=jesus@gmail.com
-
-# Activar la depuración del script
 set -x
-# Actualizamos
-apt update
-apt upgrade
 
-# Creamos la base de datos
-mysql -u $ROOT_MYSQL -p$CLAVE_MYSQL <<< "DROP DATABASE IF EXISTS $DB_NAME;"
-mysql -u $ROOT_MYSQL -p$CLAVE_MYSQL <<< "CREATE DATABASE $DB_NAME;"
+# Actualizamos lista de paquetes
 
-# Creamos el usuario 
-mysql -u $ROOT_MYSQL -p$CLAVE_MYSQL <<< "DROP USER '$DB_USER'@'$IP_PRIVADA';"
-mysql -u $ROOT_MYSQL -p$CLAVE_MYSQL <<< "CREATE USER '$DB_USER'@'$IP_PRIVADA' IDENTIFIED WITH caching_sha2_password BY '$DB_PASSWORD';"
-mysql -u $ROOT_MYSQL -p$CLAVE_MYSQL <<< "GRANT ALL ON $DB_NAME.* TO '$DB_USER'@'$IP_PRIVADA';"
-mysql -u $ROOT_MYSQL -p$CLAVE_MYSQL <<< "FLUSH PRIVILEGES;"
+apt update 
 
+# Actualizamos los paquetes
 
-# Descargar archivo wp-cli.phar
-curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+apt upgrade -y
 
-# Asignar permiso de ejecución
+# Instalamos el servidor web Apache
+
+apt install apache2 -y
+
+# Instalamos MySQL-Server
+
+apt install mysql-server -y
+
+# Instalamos los modulos de PHP
+
+apt install php libapache2-mod-php php-mysql -y
+
+######################
+#   Variables        #
+######################
+
+BD_NOMBRE=wpiaw
+BD_USUARIO=jesus
+IP_FRONT=localhost
+BD_PASS=root
+URL=http://
+# Configuración de base de datos
+
+mysql -u root <<< "DROP DATABASE IF EXISTS $BD_NOMBRE;"
+mysql -u root <<<"CREATE DATABASE $BD_NOMBRE;"
+mysql -u root <<<"DROP USER IF EXISTS $BD_USUARIO@$IP_FRONT;"
+mysql -u root <<<"CREATE USER $BD_USUARIO@$IP_FRONT IDENTIFIED BY '$BD_PASS';"
+mysql -u root <<<"GRANT ALL PRIVILEGES ON $BD_NOMBRE.* TO $BD_USUARIO@$IP_FRONT;"
+mysql -u root <<<"FLUSH PRIVILEGES;"
+
+# Nos descargamos el cliente de Wordpress
+wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+
+# Damos permisos de ejecución
 chmod +x wp-cli.phar
 
-# Mover el archivo al directorio y cambiar su nombre (así se puede usar sin tener que utilizar una ruta absoluta)
+# Lo movemos a la ruta indicada
 mv wp-cli.phar /usr/local/bin/wp
 
-
-# Ir al directorio de descarga para Wordpress
+# Cambiamos al directorio de instalación
 cd /var/www/html
-
-# Eliminamos index.html
 rm -rf index.html
-
-# Descargar código de Wordpress (en español) con el flag --allow-root para que permita descargarlo
+# Descargamos el Wordpress en español
 wp core download --locale=es_ES --allow-root
 
-# Le damos permiso a la carpeta de wordpress
-chown -R www-data:www-data /var/www/html
+# Crear el archivo de configuración
+wp config create --dbname=$BD_NOMBRE --dbuser=$BD_USUARIO --dbpass=$BD_PASS --allow-root
 
-# Crear archivo de configuración
-wp config create --dbname=$DB_NAME --dbuser=$DB_USER --dbpass=$DB_PASSWORD --allow-root
+# Instalamos el cliente de Wordpress
+wp core install --url=$URL --title="jesus" --admin_user=jesus --admin_password=root --admin_email=jesus@gmail.com --allow-root
 
-# Crear sitio Wordpress
-wp core install --url=$WP_URL --title="$WP_NAME" --admin_user=$WP_ADMIN --admin_password=$WP_ADMIN_PASS --admin_email=$WP_ADMIN_EMAIL --allow-root
+cd /home/ubuntu/
+
+# Descargamos los plugins de wordpress
 
 # Descargar plugins de wordpress
 wget https://downloads.wordpress.org/plugin/rocket-lazy-load.2.3.4.zip
